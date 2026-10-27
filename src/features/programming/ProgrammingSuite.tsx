@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { CopyResultButton } from "../../components/CopyResultButton";
 import { NumberField } from "../../components/NumberField";
+import { buildGitWorkflow, type GitWorkflow } from "../../lib/gitGuide";
 import {
   calculateChecksums, calculateUartTime, cheatSheets, codeTemplate, convertCase,
   convertCurl, cronNextRuns, dateFormatSamples, explainCron, formatSql,
@@ -8,7 +9,7 @@ import {
   transformString, yamlToJson, type CodeTarget,
 } from "../../lib/programmingSuite";
 
-type ToolId = "snippet-library" | "json-codegen" | "curl-converter" | "string-escape" | "case-converter" | "date-format" | "json-yaml-sql" | "cron-generator" | "code-templates" | "crc-tools" | "float-uart";
+type ToolId = "snippet-library" | "json-codegen" | "curl-converter" | "string-escape" | "case-converter" | "date-format" | "json-yaml-sql" | "cron-generator" | "code-templates" | "crc-tools" | "float-uart" | "github-commands";
 
 function Panel({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return <section className="web-tool-panel dev-tool-panel"><header className="web-panel-heading"><h2>{title}</h2><p>{description}</p></header>{children}</section>;
@@ -80,6 +81,46 @@ function TemplatesTool() {
   return <Panel title="Templates e referências de código" description="Gere arquivos iniciais e consulte lembretes curtos. Templates são ponto de partida, não configuração completa de produção."><div className="file-tabs">{[["gitignore", ".gitignore"], ["template", "Templates"], ["reference", "Referências rápidas"]].map(([value, label]) => <button key={value} className={mode === value ? "selected" : ""} onClick={() => { setMode(value); setChoice(value === "gitignore" ? "node" : value === "template" ? "package.json" : "Java"); }}>{label}</button>)}</div><label className="text-field"><span>Opção</span><select className="select-control" value={choice} onChange={(event) => setChoice(event.target.value)}>{choices.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><Output value={output}/></Panel>;
 }
 
+function GitHubCommandsTool() {
+  const [workflow, setWorkflow] = useState<GitWorkflow>("first-push");
+  const [owner, setOwner] = useState("seu-usuario");
+  const [repository, setRepository] = useState("meu-projeto");
+  const [branch, setBranch] = useState("minha-tarefa");
+  const [message, setMessage] = useState("Atualiza projeto");
+  let steps: ReturnType<typeof buildGitWorkflow> = [];
+  let error = "";
+  try {
+    steps = buildGitWorkflow(workflow, { owner, repository, branch, message });
+  } catch (reason) {
+    error = reason instanceof Error ? reason.message : "Confira os campos preenchidos.";
+  }
+
+  const options: [GitWorkflow, string][] = [
+    ["first-push", "Publicar pela primeira vez"],
+    ["update", "Enviar atualizações"],
+    ["clone", "Baixar um projeto"],
+    ["branch", "Criar uma branch e enviar"],
+    ["sync", "Buscar atualizações"],
+  ];
+
+  return <Panel title="Guia de comandos Git e GitHub" description="Escolha o que quer fazer. Estes comandos são para o PowerShell do Windows; execute um por vez na pasta do projeto e pare se algum apresentar erro.">
+    <label className="text-field"><span>O que você quer fazer?</span><select className="select-control" value={workflow} onChange={(event) => setWorkflow(event.target.value as GitWorkflow)}>{options.map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
+    <div className="electronics-fields">
+      <label className="text-field"><span>Usuário ou organização do GitHub</span><input value={owner} onChange={(event) => setOwner(event.target.value)} placeholder="ex.: lorenzoPiecha" /></label>
+      <label className="text-field"><span>Nome do repositório</span><input value={repository} onChange={(event) => setRepository(event.target.value)} placeholder="ex.: yva-tools" /></label>
+    </div>
+    {workflow === "branch" && <label className="text-field"><span>Nome da nova branch</span><input value={branch} onChange={(event) => setBranch(event.target.value)} placeholder="ex.: melhoria-menu" /></label>}
+    {(workflow === "first-push" || workflow === "update" || workflow === "branch") && <label className="text-field"><span>Mensagem do commit</span><input value={message} onChange={(event) => setMessage(event.target.value)} maxLength={120} placeholder="ex.: Adiciona guia GitHub" /></label>}
+    {error && <Failure value={error} />}
+    {!error && <>
+      <div className="git-guide-warning"><strong>Antes de começar</strong><p>Confira o resultado de <code>git status</code> e não envie senhas, tokens ou arquivos `.env`. Para o primeiro envio, crie no GitHub um repositório vazio, sem README inicial.</p></div>
+      <div className="git-guide-steps" aria-label="Comandos na ordem de execução">
+        {steps.map((step, index) => <article className="git-guide-step" key={`${step.title}-${index}`}><div className="git-guide-step-heading"><span>{index + 1}</span><div><h3>{step.title}</h3><p>{step.explanation}</p></div></div><div className="git-guide-command"><code>{step.command}</code><CopyResultButton value={step.command} /></div></article>)}
+      </div>
+    </>}
+  </Panel>;
+}
+
 function CrcTool() {
   const [input, setInput] = useState("123456789"); const [encoding, setEncoding] = useState<"text" | "hex">("text"); const [result, setResult] = useState<ReturnType<typeof calculateChecksums> | null>(null); const [error, setError] = useState("");
   const calculate = () => { try { setResult(calculateChecksums(input, encoding)); setError(""); } catch (reason) { setResult(null); setError(reason instanceof Error ? reason.message : "Entrada inválida."); } };
@@ -102,6 +143,7 @@ const views: Record<ToolId, () => React.ReactNode> = {
   "json-yaml-sql": JsonYamlSqlTool,
   "cron-generator": CronGenerator,
   "code-templates": TemplatesTool,
+  "github-commands": GitHubCommandsTool,
   "crc-tools": CrcTool,
   "float-uart": FloatUartTool,
 };

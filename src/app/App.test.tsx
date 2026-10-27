@@ -30,6 +30,16 @@ afterEach(() => {
 });
 
 describe("Parte 2: busca, favoritos, histórico e preferências", () => {
+  it("abre o guia GitHub e mostra comandos ordenados para enviar atualizações", async () => {
+    const user = userEvent.setup();
+    mount("/ferramentas/github-commands");
+    await screen.findByRole("heading", { name: "Guia de comandos Git e GitHub" });
+    await user.selectOptions(await screen.findByLabelText("O que você quer fazer?"), "update");
+    expect(screen.getAllByText("git status")).toHaveLength(3);
+    expect(screen.getByText("git add .")).toBeTruthy();
+    expect(screen.getByText("git push")).toBeTruthy();
+  });
+
   it("abre a busca com Ctrl/⌘+K, encontra sinônimos e navega pelos resultados com o teclado", async () => {
     const user = userEvent.setup();
     mount();

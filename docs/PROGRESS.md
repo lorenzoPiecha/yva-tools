@@ -101,5 +101,19 @@
 - Removida anteriormente a ação de pedir/sugerir ideias a amigos, conforme solicitação.
 - Adicionado `public/_redirects` para servir a aplicação React em URLs de rotas internas no Netlify.
 - Verificações desta revisão: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 86 testes em 14 arquivos; `npm run build` passou. Confirmado que `dist/_redirects` é incluído no build.
-- Publicação ainda não realizada: o diretório atual não contém um repositório Git inicializado; instruções para criar o repositório no GitHub e conectar ao Netlify serão fornecidas ao usuário.
+- O usuário publicou o projeto pelo GitHub e Netlify; endereço mostrado: `https://yvatools.netlify.app`.
+
+## Identidade visual — logo e ícone — 2026-10-27
+
+- Adicionada a imagem fornecida em `public/yva-tools-icon.png`, aplicada à marca do menu lateral e configurada como favicon e ícone Apple.
+- Criado `public/manifest.webmanifest` com nome, cores, ícone 512×512 e modo de abertura standalone. Isso configura a identidade de instalação; não adiciona suporte offline/service worker.
+- Verificações após esta mudança: `npm run typecheck` passou; os 86 testes passaram em 14 arquivos; `npm run build` passou. Conferido que `dist/` contém logo, manifesto e regra de rotas.
+
+## Guia Git e GitHub — 2026-10-27
+
+- Nova ferramenta em Programação com roteiros passo a passo para primeiro envio, atualizações, clone, branch/Push Request e sincronização.
+- Campos de usuário/repositório/branch/mensagem geram comandos PowerShell copiáveis. O site apenas apresenta os comandos, não executa ações; alerta para revisar `git status` e evitar segredos.
+- Adicionado teste unitário de montagem/validação dos comandos e teste de integração da rota da ferramenta.
+- Cada comando tem seu próprio botão de cópia para incentivar a revisão e execução passo a passo. A interface explica que os comandos são para PowerShell do Windows e pede para interromper o fluxo se algum comando falhar.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 91 testes em 15 arquivos; `npm run build` passou.
 

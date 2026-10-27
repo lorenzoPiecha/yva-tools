@@ -243,7 +243,7 @@ export default function App() {
       >
         <Link className="brand" to="/">
           <span className="brand-mark">
-            <Command size={21} />
+            <img src="/yva-tools-icon.png" alt="" />
           </span>
           <span>
             YVA<span className="brand-light"> TOOLS</span>
@@ -978,7 +978,8 @@ function ToolPage({
         case "code-templates":
         case "crc-tools":
         case "float-uart":
-          return <Suspense fallback={<div className="coming-panel">Carregando ferramenta…</div>}><ProgrammingSuite tool={slug as "snippet-library" | "json-codegen" | "curl-converter" | "string-escape" | "case-converter" | "date-format" | "json-yaml-sql" | "cron-generator" | "code-templates" | "crc-tools" | "float-uart"}/></Suspense>;
+        case "github-commands":
+          return <Suspense fallback={<div className="coming-panel">Carregando ferramenta…</div>}><ProgrammingSuite tool={slug as "snippet-library" | "json-codegen" | "curl-converter" | "string-escape" | "case-converter" | "date-format" | "json-yaml-sql" | "cron-generator" | "code-templates" | "crc-tools" | "float-uart" | "github-commands"}/></Suspense>;
         case "json":
           return <JsonFormatter />;
         case "base64":

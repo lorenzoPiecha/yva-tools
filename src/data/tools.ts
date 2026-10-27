@@ -45,6 +45,7 @@ import {
   Search,
   BookOpenCheck,
   ClipboardList,
+  GitBranch,
 } from "lucide-react";
 
 export type Category =
@@ -1043,6 +1044,7 @@ export const tools: Tool[] = [
   { id: "json-yaml-sql", name: "JSON, YAML e SQL", description: "Converta JSON e YAML em um subconjunto seguro e formate consultas SQL.", category: "Programação", icon: Database, path: "/ferramentas/json-yaml-sql", keywords: ["json", "yaml", "sql", "formatar consulta"], synonyms: ["json para yaml", "yaml para json", "sql formatter"], status: "available" },
   { id: "cron-generator", name: "Gerador de expressão cron", description: "Monte uma expressão cron, leia seus campos e veja próximas execuções aproximadas.", category: "Programação", icon: Timer, path: "/ferramentas/cron-generator", keywords: ["cron", "agendamento", "schedule", "expressão"], synonyms: ["gerador cron", "explicar cron", "próxima execução"], status: "available" },
   { id: "code-templates", name: "Templates e referências de código", description: "Gere .gitignore e arquivos iniciais; consulte resumos de linguagens e comandos.", category: "Programação", icon: BookText, path: "/ferramentas/code-templates", keywords: ["gitignore", "pom.xml", "package.json", "dockerfile", "cheatsheet", "linux"], synonyms: ["gerador gitignore", "template docker", "cola rápida java", "referência git"], status: "available" },
+  { id: "github-commands", name: "Guia de comandos Git e GitHub", description: "Monte sequências guiadas para publicar, atualizar, baixar e organizar projetos.", category: "Programação", icon: GitBranch, path: "/ferramentas/github-commands", keywords: ["git", "github", "push", "commit", "branch", "clone", "terminal"], synonyms: ["comandos github", "subir projeto", "enviar projeto para github", "publicar no github", "git push", "git add", "git commit", "não lembro comandos git"], status: "available" },
   { id: "crc-tools", name: "CRC e checksum", description: "Calcule checksum aditivo e CRC-8, CRC-16/MODBUS e CRC-32.", category: "Programação", icon: Hash, path: "/ferramentas/crc-tools", keywords: ["crc", "checksum", "crc8", "crc16", "crc32"], synonyms: ["calcular crc", "verificar integridade", "soma de verificação"], status: "available" },
   { id: "float-uart", name: "Float IEEE-754 e tempo UART", description: "Inspecione representação float32 e estime duração de transmissão serial.", category: "Programação", icon: Binary, path: "/ferramentas/float-uart", keywords: ["float", "ieee754", "uart", "serial", "baudrate"], synonyms: ["float para hex", "tempo uart", "duração serial"], status: "available" },
   {

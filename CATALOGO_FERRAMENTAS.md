@@ -43,6 +43,7 @@ Este arquivo resume o que está disponível no site. A lista oficial de nomes, c
 - **Tabela ASCII:** consultar caracteres imprimíveis e seus códigos.
 - **Gerador Lorem Ipsum:** texto de preenchimento para protótipos.
 - **Editor Markdown:** escrever e visualizar Markdown.
+- **Guia de comandos Git e GitHub:** gerar sequências em ordem para primeiro envio, atualizações, clone, branches e sincronização; comandos são exibidos para revisão e cópia, nunca executados pelo site.
 
 ## Eletrônica
 

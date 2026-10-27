@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "YVA Tools",
+  "short_name": "YVA Tools",
+  "description": "Seu espaço pessoal de ferramentas digitais.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#071219",
+  "theme_color": "#071219",
+  "icons": [
+    {
+      "src": "/yva-tools-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
