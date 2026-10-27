@@ -85,6 +85,7 @@ Este arquivo resume o que está disponível no site. A lista oficial de nomes, c
 - **Identificador de arquivos:** examinar informações disponíveis sobre arquivos.
 - **Calculadora de tamanho de arquivos:** somar tamanhos de arquivos selecionados.
 - **Visualizador de mídia:** prévia de imagens, áudio e vídeo; permite salvar imagem/quadros e ajustar velocidade de vídeo.
+- **Editor de imagens:** recorte por arraste, giro, espelhamento, ajustes de cor, texto, redimensionamento e exportação PNG/JPEG/WebP. O processamento é local; a prévia limita o maior lado a 4096 px e formatos aceitos dependem do navegador.
 
 ## Calculadoras
 

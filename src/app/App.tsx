@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   Link,
   Route,
@@ -124,6 +124,9 @@ export default function App() {
         return next;
       });
   }, [location.pathname]);
+  useLayoutEffect(() => {
+    if (window.scrollY > 0) window.scrollTo(0, 0);
+  }, [location.pathname]);
   const filtered = useMemo(
     () =>
       tools.filter((tool) =>
@@ -243,7 +246,7 @@ export default function App() {
       >
         <Link className="brand" to="/">
           <span className="brand-mark">
-            <img src="/yva-tools-icon-v2.png" alt="" />
+            <img src="/yva-tools-logo.png" alt="" />
           </span>
           <span>
             YVA<span className="brand-light"> TOOLS</span>
@@ -1105,6 +1108,7 @@ function ToolPage({
           );
         case "compressor":
         case "conversor-imagens":
+        case "editor-imagens":
         case "recortar-imagem":
         case "remover-metadados":
         case "conversor-imagens-lote":

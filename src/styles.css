@@ -85,8 +85,8 @@ html[data-theme="light"] {
   letter-spacing: 0.5px;
 }
 .brand-mark {
-  width: 37px;
-  height: 37px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   background: var(--accent);
@@ -1346,12 +1346,13 @@ html[data-theme="light"] {
   overflow: hidden;
   background: #05080b;
   border: 1px solid #24414a;
+  flex: none;
 }
 .brand-mark img {
   display: block;
-  width: 140%;
-  height: 140%;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .git-guide-warning {
   margin-top: 14px;
@@ -1744,8 +1745,8 @@ html[data-theme="dark"] .topbar {
 html[data-theme="dark"] .brand-mark {
   color: #031217;
   box-shadow:
-    0 0 26px #69efff42,
-    0 5px 18px #0008;
+    0 0 18px #69efff26,
+    0 5px 15px #0008;
 }
 html[data-theme="dark"] .nav-active {
   color: #e7fcff;

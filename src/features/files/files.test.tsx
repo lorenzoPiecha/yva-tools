@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
@@ -23,6 +23,14 @@ describe('Parte 5: arquivos e navegação', () => {
     render(<MemoryRouter initialEntries={['/ferramentas/imagens-para-pdf']}><App /></MemoryRouter>);
     expect(await screen.findByRole('heading', { level: 2, name: 'Converter imagens para PDF' })).toBeTruthy();
     expect((screen.getByRole('button', { name: 'Converter e baixar PDF' }) as HTMLButtonElement).disabled).toBe(true);
+  });
+  it('abre o editor local de imagens e rejeita um arquivo que não é imagem', async () => {
+    render(<MemoryRouter initialEntries={['/ferramentas/editor-imagens']}><App /></MemoryRouter>);
+    expect(await screen.findByRole('heading', { level: 2, name: 'Editor de imagens' })).toBeTruthy();
+    expect(screen.getByText(/não são enviados a um servidor/i)).toBeTruthy();
+    const invalid = new File(['texto'], 'nota.txt', { type: 'text/plain' });
+    fireEvent.change(screen.getByLabelText('Abrir imagem para editar'), { target: { files: [invalid] } });
+    expect(screen.getByRole('alert').textContent).toContain('Escolha um arquivo de imagem');
   });
   it('converte CSV com campos entre aspas e não cria linha extra no fim', () => {
     expect(csvToJson('nome,observação\r\nAna,"usa, vírgulas"\r\n')).toEqual([{ nome: 'Ana', observação: 'usa, vírgulas' }]);

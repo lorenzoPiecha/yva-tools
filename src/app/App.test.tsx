@@ -27,9 +27,19 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  Object.defineProperty(window, "scrollY", { configurable: true, value: 0 });
 });
 
 describe("Parte 2: busca, favoritos, histórico e preferências", () => {
+  it("volta ao topo ao abrir uma ferramenta depois de rolar a página", async () => {
+    const scroll = vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 640 });
+    mount("/ferramentas/editor-imagens");
+    await screen.findByRole("heading", { name: "Editor de imagens" });
+    expect(scroll).toHaveBeenCalledWith(0, 0);
+    Object.defineProperty(window, "scrollY", { configurable: true, value: 0 });
+  });
+
   it("abre o guia GitHub e mostra comandos ordenados para enviar atualizações", async () => {
     const user = userEvent.setup();
     mount("/ferramentas/github-commands");

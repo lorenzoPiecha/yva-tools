@@ -1088,6 +1088,18 @@ export const tools: Tool[] = [
     status: "available",
   },
   {
+    id: "editor-imagens",
+    name: "Editor de imagens",
+    description: "Recorte, gire, ajuste cores, adicione texto e exporte imagens localmente.",
+    category: "Arquivos",
+    icon: ImagePlus,
+    path: "/ferramentas/editor-imagens",
+    keywords: ["foto", "imagem", "editar", "editor", "crop", "filtro", "texto", "pixlr"],
+    synonyms: ["editor de fotos", "editar fotografia", "recortar e girar imagem", "filtros para foto", "colocar texto em imagem"],
+    status: "available",
+    execution: "local",
+  },
+  {
     id: "pomodoro",
     name: "Temporizador Pomodoro",
     description: "Alterne períodos de foco e pausa com um contador simples.",

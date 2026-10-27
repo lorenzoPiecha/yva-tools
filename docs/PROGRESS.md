@@ -130,3 +130,17 @@
 - Prévia interativa e CSS copiável incluem hover, active, focus-visible, disabled e respeito a `prefers-reduced-motion`.
 - Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 91 testes em 15 arquivos; `npm run build` passou. Não foi feita revisão visual manual nesta rodada.
 
+## Editor de imagens — 2026-10-27
+
+- Nova ferramenta em Arquivos: importar imagem local de até 20 MB; recortar com arraste; girar, espelhar, ajustar brilho/contraste/saturação/preto e branco/sépia/desfoque; adicionar texto; redimensionar e exportar PNG/JPEG/WebP.
+- Usa Canvas no navegador sem upload. Limita a prévia e processamento-base a 4096 px no maior lado para conter uso de memória; HEIC/HEIF depende de suporte do navegador.
+- Adicionado teste de rota e validação de formato inválido.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 92 testes em 15 arquivos; `npm run build` passou. Não foi feita revisão visual manual nesta rodada.
+
+## Correção de rolagem e logo lateral — 2026-10-27
+
+- Ao trocar de rota, se a janela estava rolada, agora volta ao topo antes da próxima página ser exibida; o cabeçalho e o início da ferramenta ficam visíveis.
+- Substituída a imagem da marca lateral pelo arquivo enviado `public/yva-tools-logo.png`. O enquadramento agora preserva o espaço original da arte dentro do ícone, com brilho ciano mais discreto.
+- Atualizados favicon, ícones de instalação e manifesto com assets versionados derivados da imagem recebida para evitar cache da logo anterior.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 93 testes em 15 arquivos; `npm run build` passou. O teste de navegação confirma que uma página rolada retorna ao topo ao abrir uma ferramenta.
+

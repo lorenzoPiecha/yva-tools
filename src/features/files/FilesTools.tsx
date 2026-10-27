@@ -4,6 +4,7 @@ import { unzipSync, zipSync } from 'fflate';
 import { PDFDocument, degrees } from 'pdf-lib';
 import { NumberField } from '../../components/NumberField';
 import { CopyResultButton } from '../../components/CopyResultButton';
+import { PhotoEditor } from './PhotoEditor';
 import './files.css';
 
 const MAX_FILE = 25 * 1024 * 1024;
@@ -233,6 +234,7 @@ export async function optimizePdfStructure(file: File): Promise<Uint8Array> {
 function PdfCompressorTool() { const [file, setFile] = useState<File | null>(null); const [message, setMessage] = useState(''); const [busy, setBusy] = useState(false); const [sizes, setSizes] = useState<{ before: number; after: number } | null>(null); const run = async () => { if (!file) return; setBusy(true); setMessage(''); setSizes(null); try { const result = await optimizePdfStructure(file); downloadBlob(new Blob([result], { type: 'application/pdf' }), `${file.name.replace(/\.pdf$/i, '')}-otimizado.pdf`); setSizes({ before: file.size, after: result.byteLength }); setMessage('PDF regravado e download iniciado. O tamanho pode aumentar ou permanecer igual.'); } catch (error) { setMessage(error instanceof Error ? error.message : 'Falha ao otimizar o PDF.'); } finally { setBusy(false); } }; return <Panel title="Otimizar PDF" description="Regrave o PDF com estrutura de objetos otimizada, localmente. Isso não rasteriza páginas nem garante redução de tamanho."><DropInput label="Selecionar um PDF" accept="application/pdf,.pdf" onFiles={(incoming) => { setFile(incoming[0] ?? null); setSizes(null); setMessage(''); }}/>{file && <div className="selected-file"><FileText size={16}/><span>{file.name} · {formatBytes(file.size)}</span><button className="icon-button" aria-label="Remover PDF" onClick={() => { setFile(null); setSizes(null); }}><X size={15}/></button></div>}<div className="file-actions"><button className="primary-button" disabled={!file || busy} onClick={() => void run()}>{busy ? 'Otimizando…' : 'Otimizar e baixar'}</button><button className="text-button" onClick={() => { setFile(null); setMessage(''); setSizes(null); }}>Limpar</button></div>{sizes && <div className="conversion-grid"><div className="format-row"><span>ANTES</span><code>{formatBytes(sizes.before)}</code></div><div className="format-row"><span>DEPOIS</span><code>{formatBytes(sizes.after)} · {sizes.after <= sizes.before ? 'reduziu' : 'aumentou'} {formatBytes(Math.abs(sizes.before - sizes.after))}</code></div></div>}{message && <p role="status" className="file-message">{message}</p>}<p className="electronics-note">PDFs protegidos por senha, formulários ou arquivos incompatíveis podem não ser aceitos. A ferramenta não reduz resolução de imagens; para PDFs escaneados, a redução pode ser pequena ou inexistente.</p></Panel>; }
 
 export function FilesTool({ slug }: { slug: string }) {
+  if (slug === 'editor-imagens') return <PhotoEditor />;
   if (slug === 'compressor') return <ArchiveTool />;
   if (slug === 'conversor-imagens') return <ImageTool />;
   if (slug === 'recortar-imagem') return <ImageTool purpose="crop" />;
