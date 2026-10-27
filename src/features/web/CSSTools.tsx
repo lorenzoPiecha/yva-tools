@@ -1,0 +1,26 @@
+import { useState } from 'react';
+import { NumberField } from '../../components/NumberField';
+import { CopyResultButton } from '../../components/CopyResultButton';
+
+function Panel({ title, description, children }: { title: string; description: string; children: React.ReactNode }) { return <section className="web-tool-panel"><header className="web-panel-heading"><h2>{title}</h2><p>{description}</p></header>{children}</section>; }
+function CopyCode({ value }: { value: string }) { return <div className="code-output"><code>{value}</code><CopyResultButton value={value}/></div>; }
+function NumberControl({ label, value, setValue, min = 0, max = 100 }: { label: string; value: number; setValue: (value: number) => void; min?: number; max?: number }) { return <label className="range-control"><span>{label}<strong>{value}px</strong></span><input type="range" min={min} max={max} value={value} onChange={(event) => setValue(Number(event.target.value))}/></label>; }
+
+export function ButtonGenerator() {
+  const [background, setBackground] = useState('#19C5D8'); const [foreground, setForeground] = useState('#071219'); const [radius, setRadius] = useState(10); const [vertical, setVertical] = useState(12); const [horizontal, setHorizontal] = useState(22);
+  const css = `.yva-button {\n  background: ${background};\n  color: ${foreground};\n  border: 0;\n  border-radius: ${radius}px;\n  padding: ${vertical}px ${horizontal}px;\n  box-shadow: 0 5px 18px ${background}44;\n  cursor: pointer;\n}`;
+  return <Panel title="Gerador de botões" description="Personalize cores, espaçamento e cantos; copie CSS pronto para adaptar."><div className="button-preview-stage"><button className="button-preview" style={{ backgroundColor: background, color: foreground, borderRadius: radius, padding: `${vertical}px ${horizontal}px`, boxShadow: `0 5px 18px ${background}44` }}>Seu botão</button></div><div className="web-controls"><label className="color-control"><span>Fundo</span><div><input aria-label="Cor do fundo do botão" type="color" value={background} onChange={(event) => setBackground(event.target.value.toUpperCase())}/><code>{background}</code></div></label><label className="color-control"><span>Texto</span><div><input aria-label="Cor do texto do botão" type="color" value={foreground} onChange={(event) => setForeground(event.target.value.toUpperCase())}/><code>{foreground}</code></div></label><NumberControl label="Raio" value={radius} setValue={setRadius} max={40}/><NumberControl label="Espaço vertical" value={vertical} setValue={setVertical} max={32}/><NumberControl label="Espaço horizontal" value={horizontal} setValue={setHorizontal} max={60}/></div><CopyCode value={css}/></Panel>;
+}
+
+export function BorderGenerator() {
+  const [color, setColor] = useState('#5EE7F7'); const [width, setWidth] = useState(2); const [radius, setRadius] = useState(18); const [style, setStyle] = useState('solid');
+  const css = `border: ${width}px ${style} ${color};\nborder-radius: ${radius}px;`;
+  return <Panel title="Bordas e cantos" description="Visualize bordas e raios de canto e copie as declarações CSS."><div className="border-preview-stage"><div className="border-preview" style={{ border: `${width}px ${style} ${color}`, borderRadius: radius }}><span>Prévia</span></div></div><div className="web-controls"><label className="color-control"><span>Cor da borda</span><div><input aria-label="Cor da borda" type="color" value={color} onChange={(event) => setColor(event.target.value.toUpperCase())}/><code>{color}</code></div></label><NumberControl label="Espessura" value={width} setValue={setWidth} max={16}/><NumberControl label="Raio dos cantos" value={radius} setValue={setRadius} max={80}/><label className="color-control"><span>Estilo</span><select className="select-control" value={style} onChange={(event) => setStyle(event.target.value)}><option value="solid">Sólida</option><option value="dashed">Tracejada</option><option value="dotted">Pontilhada</option><option value="double">Dupla</option></select></label></div><CopyCode value={css}/></Panel>;
+}
+
+export function CssUnitConverter() {
+  const [value, setValue] = useState('16'); const [base, setBase] = useState('16');
+  const parsed = Number(value); const parsedBase = Number(base); const valid = value.trim() !== '' && base.trim() !== '' && Number.isFinite(parsed) && Number.isFinite(parsedBase) && parsedBase > 0;
+  const px = valid ? parsed : 0; const rem = valid ? parsed / parsedBase : 0;
+  return <Panel title="Conversor de unidades CSS" description="Converta px e rem com o tamanho base do documento configurável."><div className="unit-controls"><label className="text-field"><span>Valor em px</span><NumberField label="Valor em pixels" value={value} onChange={setValue} min="0" step="1" unit="px"/></label><label className="text-field"><span>Tamanho base (px)</span><NumberField label="Tamanho base em pixels" value={base} onChange={setBase} min="1" step="1" unit="px"/></label></div>{valid ? <div className="conversion-grid"><div className="format-row"><span>REM</span><code>{Number(rem.toFixed(4))}rem</code></div><div className="format-row"><span>PX</span><code>{px}px</code></div></div> : <p className="validation-message" role="alert">Digite valores numéricos e uma base maior que zero.</p>}</Panel>;
+}

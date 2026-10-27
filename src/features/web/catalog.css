@@ -1,0 +1,11 @@
+.icon-search-field { margin-top: 12px; }
+.icon-search-box { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--input); color: var(--accent); }
+.icon-search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent); }
+.icon-search-box input { flex: 1; min-width: 0; padding: 10px 0; border: 0 !important; outline: 0; background: transparent !important; color: var(--text); font: 11px 'DM Sans', sans-serif; }
+.icon-search-box > span { flex: none; color: var(--muted); font: 9px 'DM Mono', monospace; }
+.readme-generator { display: grid; gap: 14px; }
+.readme-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.readme-fields textarea { width: 100%; resize: vertical; }
+.readme-preview { max-height: 420px; overflow: auto; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); font: 11px/1.6 'DM Mono', monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.readme-generator .dev-actions { flex-wrap: wrap; }
+@media (max-width: 600px) { .readme-fields { grid-template-columns: 1fr; } .icon-search-box > span { font-size: 8px; } }
