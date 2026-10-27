@@ -228,42 +228,69 @@ html[data-theme="light"] {
   gap: 12px;
 }
 .search-box {
-  height: 35px;
-  width: 255px;
+  height: 40px;
+  width: 300px;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 0 10px;
+  gap: 10px;
+  padding: 0 11px;
   border: 1px solid var(--line);
-  border-radius: 7px;
+  border-radius: 10px;
   background: var(--input);
   color: var(--muted);
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.search-box > svg {
+  flex: none;
+  color: var(--accent);
 }
 .search-box input {
   width: 100%;
   min-width: 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
   color: var(--text);
-  font-size: 11px;
+  font-size: 12px;
+  padding: 0;
+}
+.search-box input:focus-visible {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
 }
 .search-box input::placeholder {
   color: var(--faint);
 }
 kbd {
   flex: none;
-  color: var(--faint);
+  padding: 4px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel2);
+  color: var(--muted);
   font:
-    10px "DM Mono",
+    9px "DM Mono",
     monospace;
 }
 .clear-search {
-  border: 0;
+  flex: none;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
   background: transparent;
   color: var(--muted);
-  padding: 1px;
   display: flex;
+  cursor: pointer;
+}
+.clear-search:hover {
+  color: var(--text);
+  border-color: var(--line);
+  background: var(--panel2);
 }
 .icon-button {
   width: 34px;
@@ -1490,28 +1517,44 @@ html[data-theme="light"] .mobile-scrim {
 .search-wrap {
   position: relative;
 }
+@keyframes search-panel-enter {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .search-suggestions {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: min(360px, 80vw);
-  max-height: 360px;
+  width: min(420px, 86vw);
+  max-height: min(440px, 70vh);
   overflow: auto;
-  padding: 6px;
+  padding: 7px;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: 12px;
   background: var(--panel);
-  box-shadow: 0 18px 48px #0006;
+  box-shadow: 0 18px 48px #0007, 0 0 0 1px color-mix(in srgb, var(--accent) 8%, transparent);
   z-index: 30;
+  animation: search-panel-enter .14s ease-out;
+}
+.search-summary {
+  padding: 7px 10px 9px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: .02em;
+}
+.search-summary span {
+  color: var(--accent);
 }
 .search-suggestion {
   width: 100%;
+  min-height: 50px;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 8px 10px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 8px;
   background: transparent;
   color: var(--muted);
   text-align: left;
@@ -1522,6 +1565,16 @@ html[data-theme="light"] .mobile-scrim {
   flex: 1;
   flex-direction: column;
   gap: 3px;
+}
+.search-suggestion > svg:first-child {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--accent);
 }
 .search-suggestion strong {
   font-size: 11px;
@@ -1537,8 +1590,13 @@ html[data-theme="light"] .mobile-scrim {
 }
 .search-suggestion:hover,
 .search-suggestion.suggestion-active {
-  background: var(--panel2);
+  background: color-mix(in srgb, var(--accent) 8%, var(--panel2));
   color: var(--accent);
+}
+.search-suggestion:hover > svg:first-child,
+.search-suggestion.suggestion-active > svg:first-child {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
 }
 .search-suggestion.suggestion-active > svg:last-child {
   opacity: 1;
@@ -1641,7 +1699,8 @@ html[data-large-text="true"] .content .settings-card strong {
 }
 .search-box:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent);
+  background: color-mix(in srgb, var(--accent) 3%, var(--input));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 16%, transparent), 0 0 24px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 .search-suggestion:focus-visible,
 .text-button:focus-visible,

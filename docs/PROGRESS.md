@@ -117,3 +117,16 @@
 - Cada comando tem seu próprio botão de cópia para incentivar a revisão e execução passo a passo. A interface explica que os comandos são para PowerShell do Windows e pede para interromper o fluxo se algum comando falhar.
 - Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 91 testes em 15 arquivos; `npm run build` passou.
 
+## Busca e ícones de navegador — 2026-10-27
+
+- Busca: removida a moldura duplicada causada pelo estilo global de inputs; ampliados campo e painel de resultados, realçado o ícone, atalho e seleção; adicionado contador de resultados e indicação de cálculo rápido. Consultas em branco não listam todo o catálogo.
+- Ícones: favicon ICO versionado e PNGs recortados de 192/512 px e Apple Touch Icon; paths novos evitam manter o favicon antigo em cache. O manifesto agora declara os tamanhos corretos. A imagem original permanece preservada.
+- Verificações após esta rodada: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 91 testes em 15 arquivos; `npm run build` passou. Build contém o favicon ICO, PNG 192/512 e ícone Apple.
+
+## Gerador de botões do Kit Web — 2026-10-27
+
+- Ampliado o gerador com estilos sólido, gradiente, 3D elevado, 3D inclinado, contorno, vidro fosco e neon.
+- Efeitos ao passar o mouse: elevar, ampliar, inclinar, brilho suave ou nenhum; opções de texto, cores, sombra/brilho, raio, espaçamento e profundidade. Inclinação controlável aparece no estilo 3D inclinado.
+- Prévia interativa e CSS copiável incluem hover, active, focus-visible, disabled e respeito a `prefers-reduced-motion`.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 91 testes em 15 arquivos; `npm run build` passou. Não foi feita revisão visual manual nesta rodada.
+

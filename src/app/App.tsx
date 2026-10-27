@@ -243,7 +243,7 @@ export default function App() {
       >
         <Link className="brand" to="/">
           <span className="brand-mark">
-            <img src="/yva-tools-icon.png" alt="" />
+            <img src="/yva-tools-icon-v2.png" alt="" />
           </span>
           <span>
             YVA<span className="brand-light"> TOOLS</span>
@@ -347,10 +347,13 @@ export default function App() {
                   }}
                   placeholder="Buscar ferramentas..."
                   aria-label="Buscar ferramentas"
+                  autoComplete="off"
+                  spellCheck={false}
                   aria-controls="search-suggestions"
-                  aria-expanded={Boolean(query)}
+                  aria-haspopup="listbox"
+                  aria-expanded={Boolean(query.trim())}
                   aria-activedescendant={
-                    query && filtered[selectedResult]
+                    query.trim() && filtered[selectedResult]
                       ? `search-result-${filtered[selectedResult].id}`
                       : undefined
                   }
@@ -368,13 +371,17 @@ export default function App() {
                   {navigator.platform.includes("Mac") ? "⌘ K" : "Ctrl K"}
                 </kbd>
               </label>
-              {query && (
+              {query.trim() && (
                 <div
                   id="search-suggestions"
                   className="search-suggestions"
                   role="listbox"
                   aria-label="Resultados da busca"
                 >
+                  <div className="search-summary" aria-live="polite">
+                    {filtered.length} {filtered.length === 1 ? "ferramenta encontrada" : "ferramentas encontradas"}
+                    {quickCalculation && <span> · cálculo rápido disponível</span>}
+                  </div>
                   {quickCalculation && (
                     <div className="quick-calc-suggestion" role="option" aria-selected="false">
                       <Calculator size={16}/>

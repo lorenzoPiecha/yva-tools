@@ -69,12 +69,19 @@ describe('Parte 3: ferramentas prioritárias', () => {
   });
 
   it('gera CSS para botões com valores alteráveis', async () => {
-    mount('/ferramentas/gerador-botoes');
+    const { container } = mount('/ferramentas/gerador-botoes');
     expect(screen.getByText(/\.yva-button/)).toBeTruthy();
     expect(screen.getByText(/border-radius: 10px/)).toBeTruthy();
     const radius = screen.getByRole('slider', { name: /Raio/ });
     fireEvent.change(radius, { target: { value: '20' } });
     expect(screen.getByText(/border-radius: 20px/)).toBeTruthy();
+    const css = () => container.querySelector('.code-output code')?.textContent ?? '';
+    fireEvent.change(screen.getByRole('combobox', { name: 'Estilo visual do botão' }), { target: { value: 'tilted' } });
+    expect(css()).toContain('rotateX(10deg)');
+    fireEvent.change(screen.getByRole('combobox', { name: 'Estilo visual do botão' }), { target: { value: 'raised' } });
+    expect(css()).toContain('box-shadow: 0 7px 0');
+    expect(css()).toContain('.yva-button:focus-visible');
+    expect(css()).toContain('.yva-button:disabled');
   });
 
   it('recusa arquivo que não seja imagem no extrator de cores', () => {

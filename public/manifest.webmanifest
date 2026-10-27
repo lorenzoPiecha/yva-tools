@@ -10,10 +10,16 @@
   "theme_color": "#071219",
   "icons": [
     {
-      "src": "/yva-tools-icon.png",
+      "src": "/yva-tools-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/yva-tools-icon-v2.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
