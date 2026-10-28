@@ -84,6 +84,65 @@ describe('Parte 3: ferramentas prioritárias', () => {
     expect(css()).toContain('.yva-button:disabled');
   });
 
+  it('personaliza componentes web e mantém prévia e HTML/CSS coerentes', async () => {
+    const user = userEvent.setup();
+    mount('/ferramentas/biblioteca-componentes');
+    expect(screen.getByRole('heading', { name: 'Biblioteca de componentes' })).toBeTruthy();
+    const title = screen.getByRole('textbox', { name: 'Título do componente' });
+    await user.clear(title);
+    await user.type(title, 'Meu card');
+    expect(screen.getByText('Meu card')).toBeTruthy();
+    expect(document.querySelector('.component-code-block code')?.textContent).toContain('Meu card');
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Tipo de componente' }), 'button');
+    expect(document.querySelector('.component-code-block code')?.textContent).toContain('<button');
+    expect(screen.getByRole('button', { name: 'Meu card' })).toBeTruthy();
+  });
+
+  it('oferece controles de formulário e barra de progresso com marcação acessível', async () => {
+    const user = userEvent.setup();
+    mount('/ferramentas/biblioteca-componentes');
+    const type = screen.getByRole('combobox', { name: 'Tipo de componente' });
+    for (const [kind, marker] of [['select', '<select>'], ['textarea', '<textarea'], ['checkbox', 'type="checkbox"'], ['switch', 'role="switch"'], ['progress', 'role="progressbar"']] as const) {
+      await user.selectOptions(type, kind);
+      expect(document.querySelector('.component-code-block code')?.textContent).toContain(marker);
+    }
+    expect(screen.getByRole('progressbar', { name: 'Componente personalizado' })).toBeTruthy();
+  });
+
+  it('gera estilos visuais com gradiente, transparência, relevo e inclinação ajustáveis', async () => {
+    const user = userEvent.setup();
+    mount('/ferramentas/biblioteca-componentes');
+    const style = screen.getByRole('combobox', { name: 'Estilo visual do componente' });
+    const css = () => document.querySelectorAll('.component-code-block code')[1]?.textContent ?? '';
+    await user.selectOptions(style, 'gradient');
+    expect(css()).toContain('linear-gradient(135deg, #19C5D8, #725CFF)');
+    await user.selectOptions(style, 'glass');
+    expect(css()).toContain('backdrop-filter: blur(8px)');
+    expect(css()).toContain('55%, transparent');
+    await user.selectOptions(style, 'raised');
+    expect(css()).toContain('box-shadow: 0 12px 0');
+    await user.selectOptions(style, 'tilted');
+    expect(css()).toContain('rotateX(8deg) rotateY(-8deg)');
+    await user.selectOptions(style, 'neon');
+    expect(css()).toContain('text-shadow:');
+    await user.click(screen.getByRole('checkbox', { name: 'Ativar sombra ou brilho' }));
+    expect(css()).toContain('box-shadow: none;');
+  });
+
+  it('permite editar raios independentes nos quatro cantos', async () => {
+    const user = userEvent.setup();
+    mount('/ferramentas/bordas-css');
+    expect(document.querySelector('.code-output code')?.textContent).toContain('border-radius: 18px 18px 18px 18px');
+    await user.click(screen.getByRole('checkbox', { name: 'Manter os quatro cantos iguais' }));
+    fireEvent.change(screen.getByRole('slider', { name: 'Superior esquerdo' }), { target: { value: '40' } });
+    const css = document.querySelector('.code-output code')?.textContent ?? '';
+    expect(css).toContain('border-radius: 40px 18px 18px 18px');
+    expect(document.querySelector('.border-preview')?.getAttribute('style')).toContain('40px 18px 18px 18px');
+    await user.click(screen.getByRole('checkbox', { name: 'Manter os quatro cantos iguais' }));
+    fireEvent.change(screen.getByRole('slider', { name: 'Inferior direito' }), { target: { value: '12' } });
+    expect(document.querySelector('.code-output code')?.textContent).toContain('border-radius: 12px 12px 12px 12px');
+  });
+
   it('recusa arquivo que não seja imagem no extrator de cores', () => {
     mount('/ferramentas/extrator-cores');
     const file = new File(['texto'], 'not-image.txt', { type: 'text/plain' });

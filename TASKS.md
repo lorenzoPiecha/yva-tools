@@ -77,3 +77,15 @@
 - [ ] Fazer revisão visual responsiva das novas telas e confirmar os estados claro/escuro.
 - [ ] PWA/offline continua adiado por pedido do usuário.
 
+# Expansão de Desenvolvimento Web solicitada em 2026-10-28
+
+- [x] Auditar categorias, catálogo e ferramentas web existentes; reaproveitar o gerador de botões, gradientes e sombras.
+- [x] Criar biblioteca inicial de componentes dentro de Desenvolvimento web (botão, card, selo, aviso e campo), com personalização, prévia e código copiável. Typecheck e build passaram; 94 testes passaram em 15 arquivos.
+- [x] Ampliar a biblioteca com seletor, textarea, checkbox, switch e barra de progresso, com HTML/CSS e prévia acessível. Typecheck e build passaram; 95 testes passaram em 15 arquivos.
+- [x] Adicionar gradiente, vidro, transparência, neon, relevo/inclinação 3D e controles de sombra; validação atual: typecheck/build passaram, 96 testes em 15 arquivos.
+- [x] Permitir raios CSS independentes nos quatro cantos, com opção de vincular valores. Typecheck e build passaram; 97 testes em 15 arquivos.
+- [ ] Ampliar biblioteca de componentes e interações JavaScript seguras.
+- [ ] Completar geradores CSS restantes: radius independente por canto, glass, neon, transform, animação, fundos/padrões, clip-path, filtros e texto.
+- [ ] Color Studio, estilos visuais agrupados e ferramentas gráficas ausentes.
+- [ ] Editor visual de interfaces e exportação organizada de projetos.
+

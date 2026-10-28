@@ -190,6 +190,17 @@ export const tools: Tool[] = [
     status: "available",
   },
   {
+    id: "biblioteca-componentes",
+    name: "Biblioteca de componentes HTML/CSS",
+    description: "Personalize botão, card, selo, aviso ou campo e copie HTML e CSS.",
+    category: "Desenvolvimento web",
+    icon: Code2,
+    path: "/ferramentas/biblioteca-componentes",
+    keywords: ["componente", "html", "css", "card", "botão", "formulário"],
+    synonyms: ["biblioteca de componentes", "gerador de componentes", "componentes visuais"],
+    status: "available",
+  },
+  {
     id: "bordas-css",
     name: "Bordas e cantos CSS",
     description: "Ajuste bordas e cantos com prévia em tempo real.",

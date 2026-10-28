@@ -1,4 +1,12 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   Link,
   Route,
@@ -32,6 +40,7 @@ import {
   ButtonGenerator,
   CssUnitConverter,
 } from "../features/web/CSSTools";
+import { ComponentLibrary } from "../features/web/ComponentLibrary";
 import {
   ColorConverter,
   ContrastChecker,
@@ -43,7 +52,10 @@ import {
   JsonFormatter,
   UuidGenerator,
 } from "../features/programming/DevTools";
-import { ElectronicsTool, formatEngineeringResult } from "../features/electronics/ElectronicsTools";
+import {
+  ElectronicsTool,
+  formatEngineeringResult,
+} from "../features/electronics/ElectronicsTools";
 import { UtilitiesTool } from "../features/utilities/UtilitiesTools";
 import { calculateQuickExpression } from "../lib/quickCalc";
 import { CopyResultButton } from "../components/CopyResultButton";
@@ -136,7 +148,10 @@ export default function App() {
       ),
     [query],
   );
-  const quickCalculation = useMemo(() => calculateQuickExpression(query), [query]);
+  const quickCalculation = useMemo(
+    () => calculateQuickExpression(query),
+    [query],
+  );
   const quickCalculationText = quickCalculation
     ? formatEngineeringResult(quickCalculation.value, quickCalculation.unit)
     : "";
@@ -382,13 +397,25 @@ export default function App() {
                   aria-label="Resultados da busca"
                 >
                   <div className="search-summary" aria-live="polite">
-                    {filtered.length} {filtered.length === 1 ? "ferramenta encontrada" : "ferramentas encontradas"}
-                    {quickCalculation && <span> · cálculo rápido disponível</span>}
+                    {filtered.length}{" "}
+                    {filtered.length === 1
+                      ? "ferramenta encontrada"
+                      : "ferramentas encontradas"}
+                    {quickCalculation && (
+                      <span> · cálculo rápido disponível</span>
+                    )}
                   </div>
                   {quickCalculation && (
-                    <div className="quick-calc-suggestion" role="option" aria-selected="false">
-                      <Calculator size={16}/>
-                      <span><strong>Resultado rápido</strong><small>{query}</small></span>
+                    <div
+                      className="quick-calc-suggestion"
+                      role="option"
+                      aria-selected="false"
+                    >
+                      <Calculator size={16} />
+                      <span>
+                        <strong>Resultado rápido</strong>
+                        <small>{query}</small>
+                      </span>
                       <b>{quickCalculationText}</b>
                     </div>
                   )}
@@ -444,8 +471,29 @@ export default function App() {
               title={`Resultados para “${query}”`}
               subtitle={`${filtered.length} ferramenta${filtered.length === 1 ? "" : "s"} encontrada${filtered.length === 1 ? "" : "s"}.`}
             />
-            {quickCalculation && <section className="quick-calculation-result"><div><small>CALCULADORA RÁPIDA</small><h2>{query}</h2><strong>{quickCalculationText}</strong></div><CopyResultButton value={quickCalculationText}/></section>}
-            {filtered.length > 0 ? <ToolGrid items={filtered} favorites={favorites} onFavorite={toggleFavorite}/> : !quickCalculation && <p className="empty-state">Nenhuma ferramenta encontrada para essa busca.</p>}
+            {quickCalculation && (
+              <section className="quick-calculation-result">
+                <div>
+                  <small>CALCULADORA RÁPIDA</small>
+                  <h2>{query}</h2>
+                  <strong>{quickCalculationText}</strong>
+                </div>
+                <CopyResultButton value={quickCalculationText} />
+              </section>
+            )}
+            {filtered.length > 0 ? (
+              <ToolGrid
+                items={filtered}
+                favorites={favorites}
+                onFavorite={toggleFavorite}
+              />
+            ) : (
+              !quickCalculation && (
+                <p className="empty-state">
+                  Nenhuma ferramenta encontrada para essa busca.
+                </p>
+              )
+            )}
           </div>
         ) : (
           <Routes>
@@ -957,6 +1005,8 @@ function ToolPage({
           return <ImageColorExtractor />;
         case "gerador-botoes":
           return <ButtonGenerator />;
+        case "biblioteca-componentes":
+          return <ComponentLibrary />;
         case "bordas-css":
           return <BorderGenerator />;
         case "unidades-css":
@@ -974,9 +1024,27 @@ function ToolPage({
             </Suspense>
           );
         case "formatadores-codigo":
-          return <Suspense fallback={<div className="coming-panel">Carregando formatador…</div>}><WebDevKit initialTab="format" /></Suspense>;
+          return (
+            <Suspense
+              fallback={
+                <div className="coming-panel">Carregando formatador…</div>
+              }
+            >
+              <WebDevKit initialTab="format" />
+            </Suspense>
+          );
         case "regex-tester":
-          return <Suspense fallback={<div className="coming-panel">Carregando testador de regex…</div>}><WebDevKit initialTab="regex" /></Suspense>;
+          return (
+            <Suspense
+              fallback={
+                <div className="coming-panel">
+                  Carregando testador de regex…
+                </div>
+              }
+            >
+              <WebDevKit initialTab="regex" />
+            </Suspense>
+          );
         case "snippet-library":
         case "json-codegen":
         case "curl-converter":
@@ -989,7 +1057,31 @@ function ToolPage({
         case "crc-tools":
         case "float-uart":
         case "github-commands":
-          return <Suspense fallback={<div className="coming-panel">Carregando ferramenta…</div>}><ProgrammingSuite tool={slug as "snippet-library" | "json-codegen" | "curl-converter" | "string-escape" | "case-converter" | "date-format" | "json-yaml-sql" | "cron-generator" | "code-templates" | "crc-tools" | "float-uart" | "github-commands"}/></Suspense>;
+          return (
+            <Suspense
+              fallback={
+                <div className="coming-panel">Carregando ferramenta…</div>
+              }
+            >
+              <ProgrammingSuite
+                tool={
+                  slug as
+                    | "snippet-library"
+                    | "json-codegen"
+                    | "curl-converter"
+                    | "string-escape"
+                    | "case-converter"
+                    | "date-format"
+                    | "json-yaml-sql"
+                    | "cron-generator"
+                    | "code-templates"
+                    | "crc-tools"
+                    | "float-uart"
+                    | "github-commands"
+                }
+              />
+            </Suspense>
+          );
         case "json":
           return <JsonFormatter />;
         case "base64":

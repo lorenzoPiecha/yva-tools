@@ -1,5 +1,30 @@
 # Progresso do projeto
 
+## Expansão Desenvolvimento Web — entrega inicial segura — 2026-10-28
+
+- Auditadas as ferramentas existentes antes da implementação: gradientes, sombras e gerador de botões já estavam disponíveis e não foram duplicados.
+- Adicionada à categoria existente Desenvolvimento web a Biblioteca de componentes HTML/CSS com botão, card, selo, aviso e campo; oferece prévia, texto, cores, raio, espaçamento, sombra e cópia separada de HTML/CSS e combinada.
+- A ferramenta é local e não executa código fornecido pelo usuário. Teste de integração cobre alteração da prévia/HTML e troca de tipo.
+- Limite desta entrega: biblioteca inicial de cinco componentes. Outros tipos e estados avançados, gradientes de vários pontos, animações/clip-path/padrões, extração de cores, estilos agrupados, editor visual e exportação de projeto permanecem pendentes; nada disso é anunciado como concluído.
+- Verificações executadas: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 94 testes em 15 arquivos; `npm run build` passou. Não foi feita revisão visual manual.
+
+## Biblioteca web — componentes de formulário — 2026-10-28
+
+- Ampliada a Biblioteca de componentes com seletor, área de texto, checkbox, switch e barra de progresso; cada tipo gera marcação HTML sem executar script externo e estilos CSS correspondentes.
+- A prévia continua usando elementos reais e mantém controles nativos acessíveis; o switch possui interação de alternância e os demais códigos podem ser copiados individualmente ou juntos.
+- Verificações executadas: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 95 testes em 15 arquivos; `npm run build` passou. Não houve revisão visual manual.
+
+## Biblioteca web — estilos personalizáveis — 2026-10-28
+
+- Acrescentados estilos sólido, gradiente com segunda cor e direção, vidro fosco com opacidade, transparência, neon, relevo 3D e inclinação 3D.
+- Adicionados controles de cor da sombra, desfoque, profundidade/brilho e ativação de sombra; os valores aparecem tanto na prévia quanto no CSS copiado.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 96 testes em 15 arquivos; `npm run build` passou; `git diff --check` sem erros de whitespace. Não foi feita revisão visual manual.
+
+## Gerador de cantos CSS — 2026-10-28
+
+- Atualizado o gerador de bordas para permitir manter raios sincronizados ou ajustar individualmente os quatro cantos; prévia e declaração `border-radius` refletem os mesmos valores.
+- Verificações: `npm run typecheck` passou; `npm test -- --reporter=dot` passou com 97 testes em 15 arquivos; `npm run build` passou; `git diff --check` sem erros de whitespace. Os controles deslizantes receberam nomes acessíveis explícitos.
+
 Última atualização: 2026-10-27
 
 ## Arquivos — conversor de imagem para PDF
